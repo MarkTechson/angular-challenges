@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { randStudent, randTeacher } from '../../data-access/fake-http.service';
 import { StudentStore } from '../../data-access/student.store';
@@ -12,22 +11,13 @@ import { ListItemComponent } from '../list-item/list-item.component';
     <div
       class="flex w-fit flex-col gap-3 rounded-md border-2 border-black p-4"
       [class]="customClass">
-      <img
-        *ngIf="type === CardType.TEACHER"
-        src="assets/img/teacher.png"
-        width="200px" />
-      <img
-        *ngIf="type === CardType.STUDENT"
-        src="assets/img/student.webp"
-        width="200px" />
+      <ng-content></ng-content>
 
-      <section>
-        <app-list-item
-          *ngFor="let item of list"
-          [name]="item.firstName"
-          [id]="item.id"
-          [type]="type"></app-list-item>
-      </section>
+      <!-- <section>
+        @for (item of list; track item) {
+          <app-list-item [name]="item.firstName" [id]="item.id" [type]="type" [deleteFn]="" />
+        }
+      </section> -->
 
       <button
         class="rounded-sm border border-blue-500 bg-blue-300 p-2"
@@ -37,7 +27,7 @@ import { ListItemComponent } from '../list-item/list-item.component';
     </div>
   `,
   standalone: true,
-  imports: [NgIf, NgFor, ListItemComponent],
+  imports: [ListItemComponent],
 })
 export class CardComponent {
   @Input() list: any[] | null = null;
